@@ -1,5 +1,10 @@
 package com.shrhang.create_logistics_by_shh;
 
+import com.shrhang.create_logistics_by_shh.registries.ComponentRegister;
+import com.shrhang.create_logistics_by_shh.registries.CreativeTabRegister;
+import com.shrhang.create_logistics_by_shh.registries.ItemRegister;
+import com.shrhang.create_logistics_by_shh.registries.MenuTypeRegister;
+import com.tterrag.registrate.Registrate;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -36,14 +41,18 @@ public class ShHsCreateLogistics {
     public static final String MODID = "create_logistics_by_shh";
     public static final Logger LOGGER = LogUtils.getLogger();
 
+//    private static final Registrate REGISTRATE = Registrate.create(MODID);
+
     public ShHsCreateLogistics(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
 
         NeoForge.EVENT_BUS.register(this);
-
-        modEventBus.addListener(this::addCreative);
-
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+
+        ComponentRegister.register(modEventBus);
+        CreativeTabRegister.register(modEventBus);
+        ItemRegister.register(modEventBus);
+        MenuTypeRegister.register(modEventBus);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
@@ -56,10 +65,6 @@ public class ShHsCreateLogistics {
         LOGGER.info("{}{}", Config.MAGIC_NUMBER_INTRODUCTION.get(), Config.MAGIC_NUMBER.getAsInt());
 
         Config.ITEM_STRINGS.get().forEach((item) -> LOGGER.info("ITEM >> {}", item));
-    }
-
-    private void addCreative(BuildCreativeModeTabContentsEvent event) {
-
     }
 
     @SubscribeEvent

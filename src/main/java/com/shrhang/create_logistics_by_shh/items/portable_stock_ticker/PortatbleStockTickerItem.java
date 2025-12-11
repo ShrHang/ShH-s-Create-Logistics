@@ -1,10 +1,15 @@
 package com.shrhang.create_logistics_by_shh.items.portable_stock_ticker;
 
+import com.shrhang.create_logistics_by_shh.registries.ComponentRegister;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -19,6 +24,16 @@ public class PortatbleStockTickerItem extends Item {
     }
 
     @Override
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (level.isClientSide() || !player.isShiftKeyDown()) {
+            InteractionResult result = tryToOpenMenu(level, player, stack);
+            return new InteractionResultHolder<>(result, stack);
+        }
+        return InteractionResultHolder.pass(stack);
+    }
+
+    @Override
     public InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
         Player player = context.getPlayer();
@@ -27,33 +42,45 @@ public class PortatbleStockTickerItem extends Item {
         if (level.isClientSide() || player == null)
             return InteractionResult.PASS;
 
-        if (player.isShiftKeyDown()) {
-            BlockPos pos = context.getClickedPos();
-            BlockEntity be = level.getBlockEntity(pos);
-            if (be instanceof StockTickerBlockEntity) {
-                setData(stack, level, pos);
-                player.sendSystemMessage(Component.literal("Portable Stock Ticker linked to position: " + pos.toShortString() + " in " + level.dimension().location()));
-                return InteractionResult.SUCCESS;
-            }
-        } else {
-            BlockPos pos = stack.get(LvPosComponent.LV_POS_COMPONENT_TYPE).pos();
-            ResourceKey<Level> dimension = stack.get(LvPosComponent.LV_POS_COMPONENT_TYPE).dimension();
-            Level targetLevel = level.getServer().getLevel(dimension);
-            if (targetLevel != null) {
-                BlockEntity be = targetLevel.getBlockEntity(pos);
-                if (be instanceof StockTickerBlockEntity) {
-                    player.sendSystemMessage(Component.literal("Opening Stock Ticker at linked position: " + pos.toShortString() + " in " + dimension.location()));
-                    return InteractionResult.SUCCESS;
-                } else {
-                    player.sendSystemMessage(Component.literal("No Stock Ticker found at linked position: " + pos.toShortString() + " in " + dimension.location()));
-                }
-            }
+        if (player.isShiftKeyDown())
+            return linkTo(stack, level, context.getClickedPos());
+
+        return tryToOpenMenu(level, player, stack);
+    }
+
+    public static InteractionResult linkTo(ItemStack stack, Level level, BlockPos pos) {
+        BlockEntity be = level.getBlockEntity(pos);
+        if (be instanceof StockTickerBlockEntity) {
+            LvPosRecord newRecord = new LvPosRecord(level.dimension(), pos);
+            stack.set(ComponentRegister.LV_POS, newRecord);
+            return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
     }
 
-    public static void setData(ItemStack stack, Level level, BlockPos pos) {
-        LvPosRecord newRecord = new LvPosRecord(level.dimension(), pos);
-        stack.set(LvPosComponent.LV_POS_COMPONENT_TYPE, newRecord);
+    public static InteractionResult tryToOpenMenu(Level level, Player player, ItemStack stack) {
+        LvPosRecord record = stack.get(ComponentRegister.LV_POS);
+        if (record == LvPosRecord.EMPTY || record == null) {
+            player.sendSystemMessage(Component.literal("物品未链接"));
+            return InteractionResult.PASS;
+        }
+
+        BlockPos pos = record.pos();
+        ResourceKey<Level> dimension = record.dimension();
+        // 检查玩家是否在正确的维度
+        if (player.level().dimension() != dimension) {
+            player.sendSystemMessage(Component.literal("必须在链接所在的维度才能打开"));
+            return InteractionResult.FAIL;
+        }
+        Level targetLevel = level.getServer().getLevel(dimension);
+        BlockEntity be = targetLevel.getBlockEntity(pos);
+        if (targetLevel.getBlockEntity(pos) instanceof StockTickerBlockEntity) {
+            player.openMenu(new RemoteStockKeeperRequestMenuProvider((StockTickerBlockEntity) be), pos);
+            player.sendSystemMessage(Component.literal("已打开链接的库存信息界面"));
+            return InteractionResult.SUCCESS;
+        }
+        player.sendSystemMessage(Component.literal("在链接位置未找到方块"));
+
+        return InteractionResult.PASS;
     }
 }
