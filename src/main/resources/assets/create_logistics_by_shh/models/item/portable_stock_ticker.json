@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "create_logistics_by_shh:item/portable_stock_ticker"
+  }
+}
