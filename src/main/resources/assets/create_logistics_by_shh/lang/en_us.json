@@ -1,13 +1,10 @@
 {
-  "itemGroup.create_logistics_by_shh": "Example Mod Tab",
-  "block.create_logistics_by_shh.example_block": "Example Block",
-  "item.create_logistics_by_shh.example_item": "Example Item",
+  "itemGroup.create_logistics_by_shh.baseTab": "ShH's Create: Logistics",
 
-  "create_logistics_by_shh.configuration.title": "ShH's Create: Logistics Configs",
-  "create_logistics_by_shh.configuration.section.create_logistics_by_shh.common.toml": "ShH's Create: Logistics Configs",
-  "create_logistics_by_shh.configuration.section.create_logistics_by_shh.common.toml.title": "ShH's Create: Logistics Configs",
-  "create_logistics_by_shh.configuration.items": "Item List",
-  "create_logistics_by_shh.configuration.logDirtBlock": "Log Dirt Block",
-  "create_logistics_by_shh.configuration.magicNumberIntroduction": "Magic Number Text",
-  "create_logistics_by_shh.configuration.magicNumber": "Magic Number"
+  "item.create_logistics_by_shh.portable_stock_ticker": "Portable Stock Ticker",
+
+  "text.create_logistics_by_shh.portable_stock_ticker.link_success": "Link to Stock Ticker successfully.",
+  "text.create_logistics_by_shh.portable_stock_ticker.no_data": "No link to a Stock Ticker",
+  "text.create_logistics_by_shh.portable_stock_ticker.different_dimension": "Stock Ticker is in different dimension.",
+  "text.create_logistics_by_shh.portable_stock_ticker.no_block": "Cannot find the Stock Ticker"
 }
