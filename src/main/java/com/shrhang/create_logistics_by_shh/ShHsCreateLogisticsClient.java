@@ -2,7 +2,6 @@ package com.shrhang.create_logistics_by_shh;
 
 import com.shrhang.create_logistics_by_shh.registries.MenuTypeRegister;
 import com.simibubi.create.content.logistics.stockTicker.StockKeeperRequestScreen;
-import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;

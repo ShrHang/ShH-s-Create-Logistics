@@ -1,6 +1,7 @@
 package com.shrhang.create_logistics_by_shh.items.portable_stock_ticker;
 
 import com.shrhang.create_logistics_by_shh.registries.ComponentRegister;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -71,13 +72,13 @@ public class PortatbleStockTickerItem extends Item {
             return false;
         }
 
-        BlockEntity be = level.getBlockEntity(pos);
-
-        if (level.getBlockEntity(pos) instanceof StockTickerBlockEntity) {
+        BlockEntity be = Minecraft.getInstance().level.getBlockEntity(pos);
+        if (be instanceof StockTickerBlockEntity) {
             player.openMenu(new RemoteStockKeeperRequestMenuProvider((StockTickerBlockEntity) be), buf ->
                     buf.writeBoolean(true).writeBoolean(false).writeBlockPos(pos));
             return true;
         }
+
         player.sendSystemMessage(Component.translatable("text.create_logistics_by_shh.portable_stock_ticker.no_block"));
         return false;
     }
