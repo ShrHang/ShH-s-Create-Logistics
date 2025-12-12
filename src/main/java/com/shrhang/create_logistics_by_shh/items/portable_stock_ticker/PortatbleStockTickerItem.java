@@ -7,9 +7,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -21,16 +19,6 @@ import com.simibubi.create.content.logistics.stockTicker.StockTickerBlockEntity;
 public class PortatbleStockTickerItem extends Item {
     public PortatbleStockTickerItem(Properties props) {
         super(props);
-    }
-
-    @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-        ItemStack stack = player.getItemInHand(hand);
-        if (level.isClientSide() || !player.isShiftKeyDown()) {
-            InteractionResult result = tryToOpenMenu(level, player, stack);
-            return new InteractionResultHolder<>(result, stack);
-        }
-        return InteractionResultHolder.pass(stack);
     }
 
     @Override
@@ -47,6 +35,20 @@ public class PortatbleStockTickerItem extends Item {
 
         return tryToOpenMenu(level, player, stack);
     }
+
+//    @Override
+//    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+//        ItemStack stack = player.getItemInHand(hand);
+//
+//        if (level.isClientSide())
+//            return InteractionResultHolder.pass(stack);
+//
+//        if (!player.isShiftKeyDown()) {
+//            InteractionResult result = tryToOpenMenu(level, player, stack);
+//            return new InteractionResultHolder<>(result, stack);
+//        }
+//        return InteractionResultHolder.pass(stack);
+//    }
 
     public static InteractionResult linkTo(ItemStack stack, Level level, BlockPos pos) {
         BlockEntity be = level.getBlockEntity(pos);
@@ -65,18 +67,20 @@ public class PortatbleStockTickerItem extends Item {
             return InteractionResult.PASS;
         }
 
-        BlockPos pos = record.pos();
         ResourceKey<Level> dimension = record.dimension();
-        // 检查玩家是否在正确的维度
-        if (player.level().dimension() != dimension) {
+        BlockPos pos = record.pos();
+
+        Level targetLevel = player.level();
+        if (targetLevel.dimension() != dimension) {
             player.sendSystemMessage(Component.literal("必须在链接所在的维度才能打开"));
             return InteractionResult.FAIL;
         }
-        Level targetLevel = level.getServer().getLevel(dimension);
+
         BlockEntity be = targetLevel.getBlockEntity(pos);
+
         if (targetLevel.getBlockEntity(pos) instanceof StockTickerBlockEntity) {
-            player.openMenu(new RemoteStockKeeperRequestMenuProvider((StockTickerBlockEntity) be), pos);
-            player.sendSystemMessage(Component.literal("已打开链接的库存信息界面"));
+            player.openMenu(new RemoteStockKeeperRequestMenuProvider((StockTickerBlockEntity) be), buf ->
+                    buf.writeBoolean(true).writeBoolean(false).writeBlockPos(pos));
             return InteractionResult.SUCCESS;
         }
         player.sendSystemMessage(Component.literal("在链接位置未找到方块"));
