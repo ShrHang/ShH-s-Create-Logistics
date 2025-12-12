@@ -15,7 +15,7 @@ public class CreativeTabRegister {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> CREATE_LOGISTICS_BY_SHH_TAB =
             CREATIVE_MODE_TABS.register("create_logistics_by_shh_tab",
                     () -> CreativeModeTab.builder()
-                            .title(Component.literal(ShHsCreateLogistics.MODID + ".tab"))
+                            .title(Component.translatable("itemGroup." + ShHsCreateLogistics.MODID + ".baseTab"))
                             .icon(() -> ItemRegister.PORTABLE_STOCK_TICKER.get().getDefaultInstance())
                             .displayItems((parameters, output) -> {
                                 output.accept(ItemRegister.PORTABLE_STOCK_TICKER.get());

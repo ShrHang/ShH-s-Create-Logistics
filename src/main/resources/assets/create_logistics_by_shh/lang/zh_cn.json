@@ -1,0 +1,10 @@
+{
+  "itemGroup.create_logistics_by_shh.baseTab": "什行的机械动力：物流",
+
+  "item.create_logistics_by_shh.portable_stock_ticker": "便携仓储发报机",
+
+  "text.create_logistics_by_shh.portable_stock_ticker.link_success": "已连接。",
+  "text.create_logistics_by_shh.portable_stock_ticker.no_data": "未连接。",
+  "text.create_logistics_by_shh.portable_stock_ticker.different_dimension": "仓储发报机位于不同维度。",
+  "text.create_logistics_by_shh.portable_stock_ticker.no_block": "无法找到仓储发报机。"
+}

@@ -22,8 +22,8 @@ public class ShHsCreateLogisticsClient {
 
     @SubscribeEvent
     static void onClientSetup(FMLClientSetupEvent event) {
-        ShHsCreateLogistics.LOGGER.info("HELLO FROM CLIENT SETUP");
-        ShHsCreateLogistics.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+//        ShHsCreateLogistics.LOGGER.info("HELLO FROM CLIENT SETUP");
+//        ShHsCreateLogistics.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
     }
 
     @SubscribeEvent

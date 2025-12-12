@@ -22,21 +22,6 @@ public class PortatbleStockTickerItem extends Item {
         super(props);
     }
 
-//    @Override
-//    public InteractionResult useOn(UseOnContext context) {
-//        Level level = context.getLevel();
-//        Player player = context.getPlayer();
-//        ItemStack stack = context.getItemInHand();
-//
-//        if (level.isClientSide() || player == null)
-//            return InteractionResult.PASS;
-//
-//        if (player.isShiftKeyDown())
-//            return linkTo(stack, level, context.getClickedPos()) ? InteractionResult.SUCCESS : InteractionResult.PASS;
-//
-//        return tryToOpenMenu(level, player, stack);
-//    }
-
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 
@@ -50,7 +35,7 @@ public class PortatbleStockTickerItem extends Item {
             BlockPos blockPos = blockHitResult.getBlockPos();
             InteractionResult result = InteractionResult.PASS;
             if (linkTo(stack, level, blockPos)) {
-                player.sendSystemMessage(Component.literal("已连接"));
+                player.sendSystemMessage(Component.translatable("text.create_logistics_by_shh.portable_stock_ticker.link_success"));
                 result = InteractionResult.SUCCESS;
             }
             return new InteractionResultHolder<>(result, stack);
@@ -74,16 +59,15 @@ public class PortatbleStockTickerItem extends Item {
     public static boolean tryToOpenMenu(Level level, Player player, ItemStack stack) {
         LvPosRecord record = stack.get(ComponentRegister.LV_POS);
         if (record == LvPosRecord.EMPTY || record == null) {
-            player.sendSystemMessage(Component.literal("物品未链接"));
+            player.sendSystemMessage(Component.translatable("text.create_logistics_by_shh.portable_stock_ticker.no_data"));
             return false;
         }
 
         ResourceKey<Level> targetDimension = record.dimension();
         BlockPos pos = record.pos();
 
-//        Level targetLevel = player.level();
         if (level.dimension() != targetDimension) {
-            player.sendSystemMessage(Component.literal("必须在链接所在的维度才能打开"));
+            player.sendSystemMessage(Component.translatable("text.create_logistics_by_shh.portable_stock_ticker.different_dimension"));
             return false;
         }
 
@@ -94,8 +78,7 @@ public class PortatbleStockTickerItem extends Item {
                     buf.writeBoolean(true).writeBoolean(false).writeBlockPos(pos));
             return true;
         }
-        player.sendSystemMessage(Component.literal("在链接位置未找到方块"));
-
+        player.sendSystemMessage(Component.translatable("text.create_logistics_by_shh.portable_stock_ticker.no_block"));
         return false;
     }
 }
