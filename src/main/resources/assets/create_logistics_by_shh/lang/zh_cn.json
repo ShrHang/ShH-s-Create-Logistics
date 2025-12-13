@@ -2,9 +2,16 @@
   "itemGroup.create_logistics_by_shh.baseTab": "什行的机械动力：物流",
 
   "item.create_logistics_by_shh.portable_stock_ticker": "便携仓储发报机",
+  "item.create_logistics_by_shh.portable_stock_ticker.tooltip.summary": "允许你连接至一个_仓储发报机_，并远程查看其库存信息。",
+  "item.create_logistics_by_shh.portable_stock_ticker.tooltip.condition1": "使用时",
+  "item.create_logistics_by_shh.portable_stock_ticker.tooltip.behaviour1": "如果与连接的_仓储发报机_处于_同一纬度_，且存在_仓库管理员_时，打开_仓库管理员_界面。",
+  "item.create_logistics_by_shh.portable_stock_ticker.tooltip.condition2": "对方块潜行使用时",
+  "item.create_logistics_by_shh.portable_stock_ticker.tooltip.behaviour2": "如果目标方块是一个_仓储发报机_，则与其建立连接。",
 
-  "text.create_logistics_by_shh.portable_stock_ticker.link_success": "已连接。",
-  "text.create_logistics_by_shh.portable_stock_ticker.no_data": "未连接。",
+
+  "text.create_logistics_by_shh.portable_stock_ticker.tooltip.linked_to": "已连接至 %s %s",
+  "text.create_logistics_by_shh.portable_stock_ticker.link_success": "已连接至仓储发报机。",
+  "text.create_logistics_by_shh.portable_stock_ticker.no_data": "未连接至仓储发报机。",
   "text.create_logistics_by_shh.portable_stock_ticker.different_dimension": "仓储发报机位于不同维度。",
   "text.create_logistics_by_shh.portable_stock_ticker.no_block": "无法找到仓储发报机。"
 }

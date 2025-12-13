@@ -13,6 +13,9 @@ out
 *.iml
 .idea
 
+# vscode
+.vscode
+
 # gradle
 build
 .gradle
@@ -22,5 +25,6 @@ eclipse
 run
 runs
 run-data
+bbmodel
 
 repo

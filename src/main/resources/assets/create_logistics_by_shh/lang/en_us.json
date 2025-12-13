@@ -2,9 +2,16 @@
   "itemGroup.create_logistics_by_shh.baseTab": "ShH's Create: Logistics",
 
   "item.create_logistics_by_shh.portable_stock_ticker": "Portable Stock Ticker",
+  "item.create_logistics_by_shh.portable_stock_ticker.tooltip.summary": "Allows you to connect to a _Stock Ticker_ and remotely view its stock information.",
+  "item.create_logistics_by_shh.portable_stock_ticker.tooltip.condition1": "When used",
+  "item.create_logistics_by_shh.portable_stock_ticker.tooltip.behaviour1": "If in the _same dimension_ as the connected _Stock Ticker_ and a _Stock Keeper_ exists, opens the request menu.",
+  "item.create_logistics_by_shh.portable_stock_ticker.tooltip.condition2": "When used in Sneak on Blocks",
+  "item.create_logistics_by_shh.portable_stock_ticker.tooltip.behaviour2": "If the target block is a _Stock Ticker_, connects to it.",
 
-  "text.create_logistics_by_shh.portable_stock_ticker.link_success": "Link to Stock Ticker successfully.",
-  "text.create_logistics_by_shh.portable_stock_ticker.no_data": "No link to a Stock Ticker",
+
+  "text.create_logistics_by_shh.portable_stock_ticker.tooltip.linked_to": "Connected to %s %s",
+  "text.create_logistics_by_shh.portable_stock_ticker.link_success": "Connected to Stock Ticker successfully.",
+  "text.create_logistics_by_shh.portable_stock_ticker.no_data": "Not connected to a Stock Ticker",
   "text.create_logistics_by_shh.portable_stock_ticker.different_dimension": "Stock Ticker is in different dimension.",
   "text.create_logistics_by_shh.portable_stock_ticker.no_block": "Cannot find the Stock Ticker"
 }
