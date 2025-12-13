@@ -1,25 +1,15 @@
+# ShH's Create: Logistics | 什行的机械动力：物流
 
-Installation information
-=======
+## What is it? | 这是什么？
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+**ShH's Create: Logistics** is a mod for Minecraft, currently in early development. It was originally created for the `ShH's Create` modpack to address the lack of remote logistics in the `Create` mod.
+**什行的机械动力：物流**是Minecraft的一个模组，目前仍处于早期开发阶段。它最初是为`什行的机械动力`整合包而创建，旨在弥补`机械动力`模组在远程物流方面的不足。
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+## Features | 功能
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+- **Remote Stock Access | 远程访问仓库** 
+    - Use Portable Stock Ticker to access your stocks.
+    - 使用便携式仓储发报机访问你的仓库。
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
-
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+That's all for now. ~~More features will be added soon...probably~~
+目前只有这些了。~~更多功能看我梦到什么做什么。~~

@@ -1,9 +1,26 @@
+# License Overview
+
+## Assets License (CC BY-NC 4.0)
+
+This license applies to any files under the following directories:
+
+- ./src/main/resources/assets/
+
+CC BY-NC 4.0 License
+
+Copyright (c) ShrHang | 什行
+
+[License](https://creativecommons.org/licenses/by-nc/4.0/)
+
+---
+
+## Code License (MIT)
+
+All other files are licensed under the MIT License:
+
 MIT License
 
-Copyright (c) 2023 NeoForged project
-
-This license applies to the template files as supplied by github.com/NeoForged/MDK
-
+Copyright (c) ShrHang | 什行
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
