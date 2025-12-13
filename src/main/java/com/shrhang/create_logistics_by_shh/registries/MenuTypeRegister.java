@@ -10,14 +10,14 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class MenuTypeRegister {
+
     public static final DeferredRegister<MenuType<?>> MENUS =
             DeferredRegister.create(Registries.MENU, ShHsCreateLogistics.MODID);
 
     public static final DeferredHolder<MenuType<?>, MenuType<RemoteStockKeeperRequestMenu>> REMOTE_STOCK_KEEPER_REQUEST =
-            MENUS.register(
-                    "remote_stock_keeper_request", () ->
-                            IMenuTypeExtension.create((windowId, inv, data) ->
-                                    new RemoteStockKeeperRequestMenu(MenuTypeRegister.REMOTE_STOCK_KEEPER_REQUEST.get(), windowId, inv, data))
+            MENUS.register("remote_stock_keeper_request", () ->
+                    IMenuTypeExtension.create((windowId, inv, data) ->
+                            new RemoteStockKeeperRequestMenu(MenuTypeRegister.REMOTE_STOCK_KEEPER_REQUEST.get(), windowId, inv, data))
             );
 
     public static void register(IEventBus bus) {
