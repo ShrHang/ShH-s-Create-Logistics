@@ -8,6 +8,8 @@
   "item.create_logistics_by_shh.portable_stock_ticker.tooltip.condition2": "对方块潜行使用时",
   "item.create_logistics_by_shh.portable_stock_ticker.tooltip.behaviour2": "如果目标方块是一个_仓储发报机_，则与其建立连接。",
 
+  "title.create_logistics_by_shh.container.endchest": "%s的%s",
+
 
   "text.create_logistics_by_shh.portable_stock_ticker.tooltip.linked_to": "已连接至 %s %s",
   "text.create_logistics_by_shh.portable_stock_ticker.link_success": "已连接至仓储发报机。",

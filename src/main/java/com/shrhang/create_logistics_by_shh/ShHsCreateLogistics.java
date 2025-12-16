@@ -1,9 +1,6 @@
 package com.shrhang.create_logistics_by_shh;
 
-import com.shrhang.create_logistics_by_shh.registries.ComponentRegister;
-import com.shrhang.create_logistics_by_shh.registries.CreativeTabRegister;
-import com.shrhang.create_logistics_by_shh.registries.ItemRegister;
-import com.shrhang.create_logistics_by_shh.registries.MenuTypeRegister;
+import com.shrhang.create_logistics_by_shh.registries.*;
 
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;
@@ -31,9 +28,15 @@ public class ShHsCreateLogistics {
     public ShHsCreateLogistics(IEventBus modEventBus) {
         NeoForge.EVENT_BUS.register(this);
         REGISTRATE.registerEventListeners(modEventBus);
+
+        BlockRegister.register();
+        BlockEntityTypeRegister.register();
+        modEventBus.addListener(CapabilityRegister::registerCapabilities);
+
+        ItemRegister.register();
         ComponentRegister.register(modEventBus);
         CreativeTabRegister.register(modEventBus);
-        ItemRegister.register();
+
         MenuTypeRegister.register(modEventBus);
     }
 

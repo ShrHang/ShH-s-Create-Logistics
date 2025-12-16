@@ -8,6 +8,7 @@
   "item.create_logistics_by_shh.portable_stock_ticker.tooltip.condition2": "When used in Sneak on Blocks",
   "item.create_logistics_by_shh.portable_stock_ticker.tooltip.behaviour2": "If the target block is a _Stock Ticker_, connects to it.",
 
+  "title.create_logistics_by_shh.container.endchest": "%s's %s",
 
   "text.create_logistics_by_shh.portable_stock_ticker.tooltip.linked_to": "Connected to %s %s",
   "text.create_logistics_by_shh.portable_stock_ticker.link_success": "Connected to Stock Ticker successfully.",

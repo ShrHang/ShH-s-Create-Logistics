@@ -7,6 +7,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import org.jetbrains.annotations.NotNull;
 
 public class RemoteStockKeeperRequestMenuProvider implements MenuProvider {
 
@@ -16,7 +17,7 @@ public class RemoteStockKeeperRequestMenuProvider implements MenuProvider {
         this.stockTickerBE = stockTickerBE;
     }
 
-    public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
+    public AbstractContainerMenu createMenu(int pContainerId, @NotNull Inventory pPlayerInventory, @NotNull Player pPlayer) {
         return new RemoteStockKeeperRequestMenu(MenuTypeRegister.REMOTE_STOCK_KEEPER_REQUEST.get(), pContainerId, pPlayerInventory, stockTickerBE);
     }
 
