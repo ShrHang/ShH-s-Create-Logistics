@@ -34,44 +34,55 @@ public class SpecialEnderChestBlock extends Block implements IWrenchable, IBE<Sp
     }
 
     protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hitResult) {
-        BlockEntity blockentity = level.getBlockEntity(pos);
-        if (blockentity instanceof SpecialEnderChestBlockEntity) {
+        if (level.getBlockEntity(pos) instanceof SpecialEnderChestBlockEntity specialEnderChestBE) {
 
             BlockPos blockpos = pos.above();
 
-            if (level.getBlockState(blockpos).isRedstoneConductor(level, blockpos))
+            if (level.getBlockState(blockpos).isRedstoneConductor(level, blockpos)) {
                 return InteractionResult.sidedSuccess(level.isClientSide);
-            else {
-                Player targetPlayer = level.getPlayerByUUID(((SpecialEnderChestBlockEntity) blockentity).getTargetUUID());
-                if (targetPlayer == null || !targetPlayer.getUUID().equals(player.getUUID())) {
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                }
-
-                player.openMenu(
-                        new SimpleMenuProvider(
-                                (id, inventory, pl) -> ChestMenu.threeRows(id, inventory, targetPlayer.getEnderChestInventory()),
-                                Component.translatable("title.create_logistics_by_shh.container.endchest", targetPlayer.getName(), Component.translatable("container.enderchest"))
-                        )
-                );
-
-                level.playSound(
-                        null,
-                        pos.getX() + 0.5,
-                        pos.getY() + 0.5,
-                        pos.getZ() + 0.5,
-                        SoundEvents.ENDER_CHEST_OPEN,
-                        SoundSource.BLOCKS,
-                        0.5F,
-                        level.random.nextFloat() * 0.1F + 0.9F
-                );
-                player.awardStat(Stats.OPEN_ENDERCHEST);
-                PiglinAi.angerNearbyPiglins(player, true);
-
-                return InteractionResult.CONSUME;
             }
-        } else {
-            return InteractionResult.sidedSuccess(level.isClientSide);
+
+            Player targetPlayer = level.getPlayerByUUID((specialEnderChestBE).getTargetUUID());
+
+            if (targetPlayer == null || !targetPlayer.getUUID().equals(player.getUUID())) {
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+
+            player.openMenu(
+                    new SimpleMenuProvider(
+                            (id, inventory, pl) -> ChestMenu.threeRows(id, inventory, targetPlayer.getEnderChestInventory()),
+                            Component.translatable("title.create_logistics_by_shh.container.endchest", targetPlayer.getName(), Component.translatable("container.enderchest"))
+                    )
+            );
+
+            level.playSound(
+                    null,
+                    pos.getX() + 0.5,
+                    pos.getY() + 0.5,
+                    pos.getZ() + 0.5,
+                    SoundEvents.ENDER_CHEST_OPEN,
+                    SoundSource.BLOCKS,
+                    0.5F,
+                    level.random.nextFloat() * 0.1F + 0.9F
+            );
+
+            player.awardStat(Stats.OPEN_ENDERCHEST);
+            PiglinAi.angerNearbyPiglins(player, true);
+
+            return InteractionResult.CONSUME;
         }
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    @Override
+    public @NotNull BlockState playerWillDestroy(@NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull Player player) {
+        super.playerWillDestroy(level, pos, state, player);
+        if (!level.isClientSide()) {
+            if (!player.isCreative()) {
+                popResource(level, pos, new ItemStack(this));
+            }
+        }
+        return state;
     }
 
     @Override
