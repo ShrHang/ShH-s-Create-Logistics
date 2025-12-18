@@ -41,10 +41,8 @@ public class SpecialEnderChestBlock extends Block implements IWrenchable, IBE<Sp
 
             if (level.getBlockState(blockpos).isRedstoneConductor(level, blockpos))
                 return InteractionResult.sidedSuccess(level.isClientSide);
-            else if (level.isClientSide)
-                return InteractionResult.SUCCESS;
             else {
-                Player targetPlayer = level.getPlayerByUUID(((SpecialEnderChestBlockEntity) blockentity).targetUUID);
+                Player targetPlayer = level.getPlayerByUUID(((SpecialEnderChestBlockEntity) blockentity).getTargetUUID());
                 if (targetPlayer == null || !targetPlayer.getUUID().equals(player.getUUID())) {
                     return InteractionResult.sidedSuccess(level.isClientSide);
                 }
@@ -96,7 +94,8 @@ public class SpecialEnderChestBlock extends Block implements IWrenchable, IBE<Sp
         super.setPlacedBy(level, pos, state, placer, stack);
         if (!level.isClientSide && placer instanceof Player player) {
             withBlockEntityDo(level, pos, be -> {
-                be.targetUUID = player.getUUID();
+                be.setTargetUUID(player.getUUID());
+                be.init();
                 be.setChanged();
             });
         }

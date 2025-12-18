@@ -12,6 +12,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
@@ -31,13 +32,19 @@ public class ShHsCreateLogistics {
 
         BlockRegister.register();
         BlockEntityTypeRegister.register();
-        modEventBus.addListener(CapabilityRegister::registerCapabilities);
 
         ItemRegister.register();
         ComponentRegister.register(modEventBus);
         CreativeTabRegister.register(modEventBus);
 
         MenuTypeRegister.register(modEventBus);
+
+        modEventBus.addListener(ShHsCreateLogistics::init);
+        modEventBus.addListener(CapabilityRegister::registerCapabilities);
+    }
+
+    public static void init(final FMLCommonSetupEvent event) {
+        InventoryIdentifiersRegister.registerDefaults();
     }
 
     @SubscribeEvent

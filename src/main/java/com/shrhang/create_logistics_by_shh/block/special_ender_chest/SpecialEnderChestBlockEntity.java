@@ -1,5 +1,7 @@
 package com.shrhang.create_logistics_by_shh.block.special_ender_chest;
 
+import com.simibubi.create.api.packager.InventoryIdentifier;
+import com.simibubi.create.foundation.ICapabilityProvider;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import net.minecraft.core.BlockPos;
@@ -10,18 +12,30 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-public class SpecialEnderChestBlockEntity extends SmartBlockEntity{
-    UUID targetUUID;
+public class SpecialEnderChestBlockEntity extends SmartBlockEntity {
+    protected ICapabilityProvider<IItemHandler> itemCapability = null;
+    private UUID targetUUID;
+    protected InventoryIdentifier invId;
+    protected IItemHandler inventory;
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     public SpecialEnderChestBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         targetUUID = null;
+    }
+
+    protected void init() {
+        invId = new SpecialEnderChestBlockInventoryIdentifier(this);
+        itemCapability = ICapabilityProvider.of(() -> inventory);
     }
 
     @Override
@@ -33,7 +47,13 @@ public class SpecialEnderChestBlockEntity extends SmartBlockEntity{
     }
 
     @Override
-    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {}
+    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
+    }
+
+    public InventoryIdentifier getInvId() {
+        this.init();
+        return this.invId;
+    }
 
     @Override
     protected void write(CompoundTag tag, HolderLookup.Provider registries, boolean clientPacket) {
@@ -55,15 +75,20 @@ public class SpecialEnderChestBlockEntity extends SmartBlockEntity{
         this.targetUUID = targetUUID;
     }
 
+    public UUID getTargetUUID() {
+        return this.targetUUID;
+    }
+
     @Nullable
-    public IItemHandler getItemHandler() {
-        if (level == null || level.isClientSide || targetUUID == null) {
+    public IItemHandler getInventory() {
+        if (level == null || level.isClientSide || targetUUID == null)
             return null;
-        }
-        Player player = Objects.requireNonNull(level.getServer()).getPlayerList().getPlayer(targetUUID);
-        if (player != null) {
-            return new InvWrapper(player.getEnderChestInventory());
-        }
-        return null;
+
+        Player targetPlayer = Objects.requireNonNull(level.getServer()).getPlayerList().getPlayer(targetUUID);
+        if (targetPlayer == null)
+            return null;
+
+        inventory = new InvWrapper(targetPlayer.getEnderChestInventory());
+        return inventory;
     }
 }

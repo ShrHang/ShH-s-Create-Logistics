@@ -12,7 +12,7 @@ public class CapabilityRegister {
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
                 BlockEntityTypeRegister.SPECIAL_ENDER_CHEST_BE.get(),
-                (be, context) -> be.getItemHandler()
+                (be, context) -> be.getInventory()
         );
     }
 }
