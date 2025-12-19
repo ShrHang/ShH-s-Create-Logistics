@@ -1,6 +1,7 @@
 package com.shrhang.create_logistics_by_shh.items.portable_stock_ticker;
 
 import com.shrhang.create_logistics_by_shh.registries.ComponentRegister;
+import com.shrhang.create_logistics_by_shh.registries.MenuTypeRegister;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -9,8 +10,11 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -115,5 +119,18 @@ public class PortatbleStockTickerItem extends Item {
 
         player.sendSystemMessage(Component.translatable("text.create_logistics_by_shh.portable_stock_ticker.no_block").withStyle(ChatFormatting.DARK_RED));
         return false;
+    }
+
+    public record RemoteStockKeeperRequestMenuProvider(StockTickerBlockEntity stockTickerBE) implements MenuProvider {
+
+        public AbstractContainerMenu createMenu(int pContainerId, @NotNull Inventory pPlayerInventory, @NotNull Player pPlayer) {
+            return new RemoteStockKeeperRequestMenu(MenuTypeRegister.REMOTE_STOCK_KEEPER_REQUEST.get(), pContainerId, pPlayerInventory, stockTickerBE);
+        }
+
+        @Override
+        public @NotNull Component getDisplayName() {
+            return Component.empty();
+        }
+
     }
 }

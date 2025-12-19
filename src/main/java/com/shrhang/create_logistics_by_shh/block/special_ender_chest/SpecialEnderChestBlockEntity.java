@@ -3,6 +3,7 @@ package com.shrhang.create_logistics_by_shh.block.special_ender_chest;
 import com.simibubi.create.api.packager.InventoryIdentifier;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import net.createmod.catnip.math.BlockFace;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -18,7 +19,7 @@ import java.util.UUID;
 
 public class SpecialEnderChestBlockEntity extends SmartBlockEntity {
     private UUID targetUUID;
-    protected InventoryIdentifier invId;
+    private InventoryIdentifier invId;
     protected IItemHandler inventory;
 
 //    private static final Logger LOGGER = LogManager.getLogger();
@@ -26,10 +27,6 @@ public class SpecialEnderChestBlockEntity extends SmartBlockEntity {
     public SpecialEnderChestBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         targetUUID = null;
-    }
-
-    protected void init() {
-        invId = new SpecialEnderChestBlockInvId(targetUUID);
     }
 
     @Override
@@ -44,8 +41,12 @@ public class SpecialEnderChestBlockEntity extends SmartBlockEntity {
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
     }
 
+    private void initInvId() {
+        invId = new SpecialEnderChestBlockInvId(targetUUID);
+    }
+
     public InventoryIdentifier getInvId() {
-        init();
+        initInvId();
         return this.invId;
     }
 
@@ -63,10 +64,11 @@ public class SpecialEnderChestBlockEntity extends SmartBlockEntity {
             targetUUID = tag.getUUID("TargetPlayer");
     }
 
-    public void setTargetUUID(UUID targetUUID) {
-        if (this.targetUUID != targetUUID)
+    public void setTargetUUID(UUID newUUID) {
+        if (!this.targetUUID.equals(newUUID))
             this.inventory = null;
-        this.targetUUID = targetUUID;
+        this.targetUUID = newUUID;
+        initInvId();
     }
 
     public UUID getTargetUUID() {
@@ -86,5 +88,13 @@ public class SpecialEnderChestBlockEntity extends SmartBlockEntity {
             inventory = new InvWrapper(targetPlayer.getEnderChestInventory());
 
         return inventory;
+    }
+
+    public record SpecialEnderChestBlockInvId(UUID targetUUID) implements InventoryIdentifier {
+        @Override
+        public boolean contains(BlockFace face) {
+            UUID uuid = face.serializeNBT().getUUID("TargetPlayer");
+            return targetUUID.equals(uuid);
+        }
     }
 }

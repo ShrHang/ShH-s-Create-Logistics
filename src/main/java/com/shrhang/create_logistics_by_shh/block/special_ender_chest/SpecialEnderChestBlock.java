@@ -106,7 +106,6 @@ public class SpecialEnderChestBlock extends Block implements IWrenchable, IBE<Sp
         if (!level.isClientSide && placer instanceof Player player) {
             withBlockEntityDo(level, pos, be -> {
                 be.setTargetUUID(player.getUUID());
-                be.init();
                 be.setChanged();
             });
         }

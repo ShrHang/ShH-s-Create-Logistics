@@ -2,10 +2,10 @@
 
 ## What is it? | 这是什么？
 
-**ShH's Create: Logistics** is a mod for Minecraft made by ShrHang, currently in early development.
+**ShH's Create: Logistics** is a mod for Minecraft made by ShrHang, currently in early development.  
 It was originally created for the **ShH's Create** modpack to address the lack of remote logistics in the **Create** mod.
 
-**什行的机械动力：物流**是由什行制作的一个Minecraft模组，目前仍处于早期开发阶段。
+**什行的机械动力：物流**是由什行制作的一个Minecraft模组，目前仍处于早期开发阶段。  
 它最初为**什行的机械动力**整合包而创建，旨在弥补**机械动力**模组在远程物流方面的不足。
 
 ## Features | 功能
