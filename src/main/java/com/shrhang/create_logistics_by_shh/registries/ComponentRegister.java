@@ -14,7 +14,7 @@ public class ComponentRegister {
             DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, ShHsCreateLogistics.MODID);
 
     public static final DataComponentType<LvPosRecord> LV_POS = register(
-            "lv_pos",
+            "stock_ticker_lv_n_pos",
             builder -> builder
                     .persistent(LvPosRecord.CODEC)
                     .networkSynchronized(LvPosRecord.STREAM_CODEC)

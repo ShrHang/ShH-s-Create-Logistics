@@ -1,9 +1,6 @@
 package com.shrhang.create_logistics_by_shh;
 
-import com.shrhang.create_logistics_by_shh.registries.ComponentRegister;
-import com.shrhang.create_logistics_by_shh.registries.CreativeTabRegister;
-import com.shrhang.create_logistics_by_shh.registries.ItemRegister;
-import com.shrhang.create_logistics_by_shh.registries.MenuTypeRegister;
+import com.shrhang.create_logistics_by_shh.registries.*;
 
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;
@@ -15,6 +12,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
@@ -31,10 +29,22 @@ public class ShHsCreateLogistics {
     public ShHsCreateLogistics(IEventBus modEventBus) {
         NeoForge.EVENT_BUS.register(this);
         REGISTRATE.registerEventListeners(modEventBus);
+
+        BlockRegister.register();
+        BlockEntityTypeRegister.register();
+
+        ItemRegister.register();
         ComponentRegister.register(modEventBus);
         CreativeTabRegister.register(modEventBus);
-        ItemRegister.register();
+
         MenuTypeRegister.register(modEventBus);
+
+        modEventBus.addListener(ShHsCreateLogistics::init);
+        modEventBus.addListener(CapabilityRegister::registerCapabilities);
+    }
+
+    public static void init(final FMLCommonSetupEvent event) {
+        InventoryIdentifiersRegister.registerDefaults();
     }
 
     @SubscribeEvent
