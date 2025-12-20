@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "create_logistics_by_shh:brass_ender_chest"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "create_logistics_by_shh:blocks/brass_ender_chest"
+}

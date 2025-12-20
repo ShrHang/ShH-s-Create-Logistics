@@ -14,6 +14,7 @@ public class ItemRegister {
                     .properties(p -> p
                             .component(ComponentRegister.LV_POS, LvPosRecord.EMPTY)
                             .stacksTo(1))
+                    .model((ctx , prov) -> {})
                     .register();
 
     public static void register() {

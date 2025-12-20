@@ -54,7 +54,6 @@ public class PortatbleStockTickerItem extends Item {
                         Component.literal(record.pos().toShortString()).withStyle(ChatFormatting.GREEN)
                 ).withStyle(ChatFormatting.DARK_GREEN));
         }
-
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 

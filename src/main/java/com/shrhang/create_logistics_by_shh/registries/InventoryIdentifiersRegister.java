@@ -5,7 +5,7 @@ import com.simibubi.create.api.packager.InventoryIdentifier;
 
 public class InventoryIdentifiersRegister {
     public static void registerDefaults() {
-        InventoryIdentifier.REGISTRY.register(BlockRegister.TEST_BLOCK.get(), (level, state, face) ->
+        InventoryIdentifier.REGISTRY.register(BlockRegister.BRASS_ENDER_CHEST.get(), (level, state, face) ->
                 level.getBlockEntity(face.getPos()) instanceof SpecialEnderChestBlockEntity be ? be.getInvId() : null);
     }
 }

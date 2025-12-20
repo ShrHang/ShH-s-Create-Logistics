@@ -9,7 +9,7 @@ public class BlockEntityTypeRegister {
     private static final CreateRegistrate REGISTRATE = ShHsCreateLogistics.REGISTRATE;
     public static final BlockEntityEntry<SpecialEnderChestBlockEntity> SPECIAL_ENDER_CHEST_BE = REGISTRATE
             .blockEntity("special_enderchest", SpecialEnderChestBlockEntity::new)
-            .validBlocks(BlockRegister.TEST_BLOCK)
+            .validBlocks(BlockRegister.BRASS_ENDER_CHEST)
             .register();
     public static void register() {
     }
