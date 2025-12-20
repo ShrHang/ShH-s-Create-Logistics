@@ -18,8 +18,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.wrapper.InvWrapper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,8 +32,6 @@ public class SpecialEnderChestBlockEntity extends SmartBlockEntity implements IH
 
     public String targetName = "???";
     protected IItemHandler inventory;
-
-    private static final Logger LOGGER = LogManager.getLogger();
 
     public SpecialEnderChestBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -68,19 +64,20 @@ public class SpecialEnderChestBlockEntity extends SmartBlockEntity implements IH
                                 "tooltip.create_logistics_by_shh.special_ender_chest.owner_unknown",
                                 nameComponent
                         )
-                        .style(ChatFormatting.DARK_RED)
-                        .forGoggles(tooltip);
-            }
-            if (isLocked)
-                CreateLang.translate("tooltip.create_logistics_by_shh.special_ender_chest.locked")
                         .style(ChatFormatting.RED)
                         .forGoggles(tooltip);
-            else
-                CreateLang.translate("tooltip.create_logistics_by_shh.special_ender_chest.unlocked")
-                        .style(ChatFormatting.GREEN)
-                        .forGoggles(tooltip);
-        } else
-            tooltip.add(Component.literal("Error: No Target. | 这不应该啊").withStyle(ChatFormatting.DARK_RED));
+            } if (isPlayerSneaking)
+                if (isLocked)
+                    CreateLang.translate("tooltip.create_logistics_by_shh.special_ender_chest.locked")
+                            .style(ChatFormatting.RED)
+                            .forGoggles(tooltip);
+                else
+                    CreateLang.translate("tooltip.create_logistics_by_shh.special_ender_chest.unlocked")
+                            .style(ChatFormatting.GREEN)
+                            .forGoggles(tooltip);
+
+        } else if (isPlayerSneaking)
+            tooltip.add(Component.literal("Error: No Target.").withStyle(ChatFormatting.RED));
         return true;
     }
 
@@ -91,7 +88,7 @@ public class SpecialEnderChestBlockEntity extends SmartBlockEntity implements IH
     private void init() {
         invId = new SpecialEnderChestBlockInvId(targetUUID);
         if (targetUUID != null && level != null && level.getPlayerByUUID(targetUUID) != null)
-            targetName = level.getPlayerByUUID(targetUUID).getName().getString();
+            targetName = Objects.requireNonNull(level.getPlayerByUUID(targetUUID)).getName().getString();
     }
 
     public InventoryIdentifier getInvId() {

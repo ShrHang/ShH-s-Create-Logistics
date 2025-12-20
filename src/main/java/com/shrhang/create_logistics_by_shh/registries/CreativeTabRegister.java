@@ -19,6 +19,7 @@ public class CreativeTabRegister {
                             .icon(() -> ItemRegister.PORTABLE_STOCK_TICKER.get().getDefaultInstance())
                             .displayItems((parameters, output) -> {
                                 output.accept(ItemRegister.PORTABLE_STOCK_TICKER.get());
+                                output.accept(BlockRegister.BRASS_ENDER_CHEST.asItem());
                             })
                             .build()
             );
