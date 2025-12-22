@@ -79,24 +79,28 @@ public class SpecialEnderChestBlock extends HorizontalDirectionalBlock implement
     // Block Interaction Core
     @Override
     protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hitResult) {
-        if (!(level.getBlockEntity(pos) instanceof SpecialEnderChestBlockEntity specialEnderChestBE))
+        if (!(level.getBlockEntity(pos) instanceof SpecialEnderChestBlockEntity brassEnderChestBE))
             return InteractionResult.sidedSuccess(level.isClientSide);
         BlockPos blockpos = pos.above();
         if (level.getBlockState(blockpos).isRedstoneConductor(level, blockpos)) {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-        Player targetPlayer = level.getPlayerByUUID((specialEnderChestBE).getTargetUUID());
+
+        if ((brassEnderChestBE).getTargetUUID() == null)
+            return InteractionResult.sidedSuccess(level.isClientSide);
+
+        Player targetPlayer = level.getPlayerByUUID((brassEnderChestBE).getTargetUUID());
         if (targetPlayer == null) {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         if (player.isCrouching()) {
             if (Objects.equals(targetPlayer, player)) {
-                specialEnderChestBE.changeLock();
+                brassEnderChestBE.changeLock();
                 return InteractionResult.CONSUME;
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         } else {
-            if (specialEnderChestBE.isLocked() && !Objects.equals(targetPlayer, player))
+            if (brassEnderChestBE.isLocked() && !Objects.equals(targetPlayer, player))
                 return InteractionResult.sidedSuccess(level.isClientSide);
 
             player.openMenu(

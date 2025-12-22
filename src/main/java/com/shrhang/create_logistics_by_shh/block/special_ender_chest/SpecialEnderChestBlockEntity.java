@@ -164,6 +164,7 @@ public class SpecialEnderChestBlockEntity extends SmartBlockEntity implements IH
     @Override
     public boolean writeToClipboard(@NotNull HolderLookup.Provider registries, CompoundTag tag, Direction side) {
         if (targetUUID != null) {
+            tag.putString("DisplayName", targetName);
             tag.putUUID("TargetPlayer", targetUUID);
             tag.putBoolean("IsLocked", isLocked);
         }
