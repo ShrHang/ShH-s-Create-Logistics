@@ -7,10 +7,10 @@
 
 ## Features | 功能
 
-- 便携仓储发报机**
+- **便携仓储发报机**
     - 使用便携式仓储发报机远程访问你的仓库。
     - ![alt text](<image/Portable Stock Ticker.png>)
-- 黄铜末影箱**
+- **黄铜末影箱**
     - 使用黄铜末影箱接入物流系统，让远程存取物品更方便。
     - ![alt text](<image/Brass Ender Chest.png>)
 
